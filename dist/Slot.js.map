@@ -1,0 +1,1 @@
+{"version":3,"file":"Slot.js","sourceRoot":"","sources":["../src/Slot.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,IAAI;IACb,EAAE,CAAS;IACX,WAAW,CAAS;IAEpB,YAAY,EAAS,EAAE,WAAmB;QACtC,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;IACnC,CAAC;CACJ"}
