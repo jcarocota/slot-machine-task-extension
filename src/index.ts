@@ -1,10 +1,12 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { GraphQLJSON } from 'graphql-type-json';
-import { spin } from './SlotEvents.js';
+import { SlotMachine } from './SlotMachine.js';
 
 const app = express();
 const port = 4000;
+
+const slotMachine = new SlotMachine();
 
 const typeDefs = gql`
   scalar JSON
@@ -18,7 +20,7 @@ const resolvers = {
   JSON: GraphQLJSON,
   Query: {
     hello: () => 'Hello, world!',
-    spin: spin,
+    spin: slotMachine.spin,
   },
 };
 
