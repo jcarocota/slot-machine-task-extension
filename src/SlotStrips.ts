@@ -7,6 +7,9 @@ const slotInfo03 = new Slot(3, 'Orange');
 const slotInfo04 = new Slot(4, 'Diamond');
 const slotInfo05 = new Slot(5, 'Big Win');
 
+export const wildcard = slotInfo04;
+export const wildcardBigWin = slotInfo05;
+
 export const strips: Slot[][] = [];
 
 //Strip #01
