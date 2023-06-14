@@ -23,4 +23,4 @@ const server = new ApolloServer({ typeDefs, resolvers });
 await server.start();
 server.applyMiddleware({ app });
 app.listen({ port }, () => console.log(`Server running at http://localhost:${port}${server.graphqlPath}`));
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index_graphql.js.map
