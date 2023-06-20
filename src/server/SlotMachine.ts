@@ -7,6 +7,15 @@ export class SlotMachine {
   readonly numberOfStrips = strips.length;
   readonly numberOfSymbolsByStrip = strips[0].length;
   readonly numberOfRowsAsResult = 3;
+  readonly winPercentageBySymbol = 0.2;
+
+  moneyBalance: number;
+  currency: string;
+
+  constructor(initialMoneyBalance: number, currency: string) {
+    this.moneyBalance = initialMoneyBalance;
+    this.currency = currency;
+  }
 
   private generateSymbolsArray = () => {
     const symbolsArray: number[][] = [];
@@ -32,7 +41,7 @@ export class SlotMachine {
     return symbolsArray;
   };
 
-  private calculatePaylines = (symbolsArray: number[][]) => {
+  private calculatePaylines = (symbolsArray: number[][], stake: number) => {
     const gottenPaylinesInfo: GottenPaylineInfo[] = [];
 
     paylines.forEach((payline: Payline) => {
@@ -75,10 +84,14 @@ export class SlotMachine {
       }
 
       if (numConsecutiveCoincidences >= 3) {
+        const amountWinByLine =
+          stake +
+          stake * this.winPercentageBySymbol * numConsecutiveCoincidences;
         let gottenPaylineInfo = new GottenPaylineInfo(
           payline,
           numConsecutiveCoincidences,
-          numBigWins
+          numBigWins,
+          amountWinByLine
         );
         gottenPaylinesInfo.push(gottenPaylineInfo);
       }
@@ -87,22 +100,41 @@ export class SlotMachine {
     return gottenPaylinesInfo;
   };
 
-  //private generatePayLines
+  private calculateAmountTotalWin = (
+    gottenPaylinesInfo: GottenPaylineInfo[]
+  ) => {
+    let amountTotalWin = gottenPaylinesInfo.reduce(
+      (total, paylineInfo: GottenPaylineInfo) =>
+        (total += paylineInfo.amountWinByLine),
+      0
+    );
 
-  spin = () => {
+    amountTotalWin = Math.round((amountTotalWin + Number.EPSILON) * 100) / 100;
+
+    return amountTotalWin;
+  };
+
+  spin = (stake: number) => {
     const symbolsArray = this.generateSymbolsArray();
-    const gottenPaylinesInfo = this.calculatePaylines(symbolsArray);
+    const gottenPaylinesInfo = this.calculatePaylines(symbolsArray, stake);
+    const amountTotalWin = this.calculateAmountTotalWin(gottenPaylinesInfo);
     //const idsGottenPaylinesInfoArray: number[] = [];
 
     /*gottenPaylinesInfo.forEach(paylineInfo => {
       idsGottenPaylinesInfoArray.push(paylineInfo.payline.id);
     })*/
 
+    this.moneyBalance += amountTotalWin - stake;
+    this.moneyBalance =
+      Math.round((this.moneyBalance + Number.EPSILON) * 100) / 100;
+
     const result = {
       symbolsArray: symbolsArray,
       gottenPaylinesInfo: gottenPaylinesInfo,
-      wildcard: wildcard,
-      wildcardBigWin: wildcardBigWin,
+      moneyBalance: this.moneyBalance,
+      amountTotalWin: amountTotalWin,
+      //wildcard: wildcard,
+      //wildcardBigWin: wildcardBigWin,
     };
 
     return result;

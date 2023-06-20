@@ -4,7 +4,7 @@ import { GraphQLJSON } from 'graphql-type-json';
 import { SlotMachine } from './SlotMachine.js';
 const app = express();
 const port = 4000;
-const slotMachine = new SlotMachine();
+const slotMachine = new SlotMachine(5000, 'USD');
 const typeDefs = gql `
   scalar JSON
   type Query {

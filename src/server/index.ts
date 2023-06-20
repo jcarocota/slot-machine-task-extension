@@ -3,7 +3,7 @@ import { WebSocket, AddressInfo, WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { SlotMachine } from './SlotMachine.js';
 
-const slotMachine = new SlotMachine();
+const slotMachine = new SlotMachine(50000, 'USD');
 
 const app = express();
 
@@ -29,11 +29,17 @@ wss.on('connection', (ws: WebSocket) => {
       console.error(`Unable to convert ${message} to JSON`);
     }
 
-    if (jsonMessage && jsonMessage['action'] && jsonMessage['user']) {
+    if (
+      jsonMessage &&
+      jsonMessage['action'] &&
+      jsonMessage['user'] &&
+      jsonMessage['stake']
+    ) {
       let action = String(jsonMessage['action']).toLowerCase();
 
       if (action == 'spin') {
-        const result = slotMachine.spin();
+        const stake: number = jsonMessage['stake'];
+        const result = slotMachine.spin(stake);
         ws.send(JSON.stringify(result));
       } else {
         console.error(`Action '${action}' not recognized`);

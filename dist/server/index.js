@@ -2,12 +2,12 @@ import express from 'express';
 import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { SlotMachine } from './SlotMachine.js';
-const slotMachine = new SlotMachine();
+const slotMachine = new SlotMachine(50000, 'USD');
 const app = express();
 const server = createServer(app);
 const port = 3000;
 const wss = new WebSocketServer({
-    server: server
+    server: server,
 });
 wss.on('connection', (ws) => {
     //connection is up, let's add a simple simple event
@@ -21,10 +21,14 @@ wss.on('connection', (ws) => {
         catch (error) {
             console.error(`Unable to convert ${message} to JSON`);
         }
-        if (jsonMessage && jsonMessage['action'] && jsonMessage['user']) {
+        if (jsonMessage &&
+            jsonMessage['action'] &&
+            jsonMessage['user'] &&
+            jsonMessage['stake']) {
             let action = String(jsonMessage['action']).toLowerCase();
             if (action == 'spin') {
-                const result = slotMachine.spin();
+                const stake = jsonMessage['stake'];
+                const result = slotMachine.spin(stake);
                 ws.send(JSON.stringify(result));
             }
             else {
