@@ -1,4 +1,4 @@
-import { strips, wildcard, wildcardBigWin } from './SlotStrips.js';
+import { strips, wildcardSymbol, wildcardBigWinSymbol, symbols } from './SlotStrips.js';
 import { paylines } from './SlotPaylines.js';
 import { GottenPaylineInfo } from './GottenPaylineInfo.js';
 export class SlotMachine {
@@ -45,13 +45,13 @@ export class SlotMachine {
             }
             let numConsecutiveCoincidences = 1;
             let numBigWins = 0;
-            let idFirstSymbol = actualLine.find((id) => id != wildcard.id && id != wildcardBigWin.id);
+            let idFirstSymbol = actualLine.find((id) => id != wildcardSymbol.id && id != wildcardBigWinSymbol.id);
             if (idFirstSymbol != undefined) {
                 for (let i = 1; i < actualLine.length; i++) {
-                    if (idFirstSymbol == actualLine[i] || actualLine[i] == wildcard.id) {
+                    if (idFirstSymbol == actualLine[i] || actualLine[i] == wildcardSymbol.id) {
                         numConsecutiveCoincidences++;
                     }
-                    else if (actualLine[i] == wildcardBigWin.id) {
+                    else if (actualLine[i] == wildcardBigWinSymbol.id) {
                         numConsecutiveCoincidences++;
                         numBigWins++;
                     }
@@ -62,7 +62,7 @@ export class SlotMachine {
             }
             else {
                 numConsecutiveCoincidences = 5;
-                numBigWins = actualLine.reduce((total, id) => (id == wildcardBigWin.id ? total++ : total), 0);
+                numBigWins = actualLine.reduce((total, id) => (id == wildcardBigWinSymbol.id ? total++ : total), 0);
             }
             if (numConsecutiveCoincidences >= 3) {
                 const amountWinByLine = stake +
@@ -96,6 +96,17 @@ export class SlotMachine {
             amountTotalWin: amountTotalWin,
             //wildcard: wildcard,
             //wildcardBigWin: wildcardBigWin,
+        };
+        return result;
+    };
+    get strips() {
+        return strips;
+    }
+    symbolsDescription = () => {
+        let result = {
+            symbols: symbols,
+            wildcardSymbolId: wildcardSymbol.id,
+            wildcardBigWinSymbolId: wildcardBigWinSymbol.id
         };
         return result;
     };

@@ -1,108 +1,115 @@
-import { Slot } from './Slot.js';
-const slotInfo00 = new Slot(0, 'Strawberry');
-const slotInfo01 = new Slot(1, 'Watermelon');
-const slotInfo02 = new Slot(2, 'Grape');
-const slotInfo03 = new Slot(3, 'Orange');
+import { Symbol } from './Symbol.js';
+const symbol00 = new Symbol(0, 'Strawberry');
+const symbol01 = new Symbol(1, 'Watermelon');
+const symbol02 = new Symbol(2, 'Grape');
+const symbol03 = new Symbol(3, 'Orange');
 //const //slotInfo04 = new Slot(4, 'Clover');
 //const //slotInfo05 = new Slot(5, 'Apple');
 //const //slotInfo06 = new Slot(6, 'Horseshoe');
 //const //slotInfo07 = new Slot(7, 'Seven');
-export const wildcard = new Slot(8, 'Diamond');
-export const wildcardBigWin = new Slot(9, 'Big Win');
+export const wildcardSymbol = new Symbol(4, 'Diamond');
+export const wildcardBigWinSymbol = new Symbol(5, 'Big Win');
 export const strips = [];
+export const symbols = [];
 //Strip #01
 strips.push([
-    slotInfo01,
-    slotInfo03,
-    slotInfo02,
-    slotInfo00,
-    slotInfo02,
-    slotInfo03,
-    slotInfo01,
-    slotInfo00,
-    slotInfo03,
-    slotInfo02,
-    slotInfo00,
-    slotInfo01,
-    slotInfo01,
-    slotInfo00,
-    slotInfo03,
-    slotInfo02,
+    symbol01,
+    symbol03,
+    symbol02,
+    symbol00,
+    symbol02,
+    symbol03,
+    symbol01,
+    symbol00,
+    symbol03,
+    symbol02,
+    symbol00,
+    symbol01,
+    symbol01,
+    symbol00,
+    symbol03,
+    symbol02,
 ]);
 //Strip #02
 strips.push([
-    slotInfo02,
-    slotInfo00,
-    slotInfo03,
-    slotInfo01,
-    slotInfo01,
-    slotInfo00,
-    slotInfo02,
-    slotInfo03,
-    slotInfo03,
-    slotInfo01,
-    slotInfo00,
-    slotInfo02,
-    slotInfo02,
-    slotInfo03,
-    slotInfo01,
-    slotInfo00,
+    symbol02,
+    symbol00,
+    symbol03,
+    symbol01,
+    symbol01,
+    symbol00,
+    symbol02,
+    symbol03,
+    symbol03,
+    symbol01,
+    symbol00,
+    symbol02,
+    symbol02,
+    symbol03,
+    symbol01,
+    symbol00,
 ]);
 //Strip #03
 strips.push([
-    slotInfo03,
-    slotInfo01,
-    slotInfo02,
-    slotInfo01,
-    slotInfo02,
-    slotInfo00,
-    slotInfo00,
-    slotInfo03,
-    slotInfo02,
-    slotInfo03,
-    slotInfo01,
-    slotInfo00,
-    slotInfo03,
-    slotInfo01,
-    slotInfo00,
-    slotInfo02,
+    symbol03,
+    symbol01,
+    symbol02,
+    symbol01,
+    symbol02,
+    symbol00,
+    symbol00,
+    symbol03,
+    symbol02,
+    symbol03,
+    symbol01,
+    symbol00,
+    symbol03,
+    symbol01,
+    symbol00,
+    symbol02,
 ]);
 //Strip #04
 strips.push([
-    slotInfo01,
-    slotInfo03,
-    slotInfo00,
-    slotInfo02,
-    slotInfo03,
-    slotInfo00,
-    slotInfo02,
-    slotInfo01,
-    slotInfo00,
-    slotInfo02,
-    slotInfo01,
-    slotInfo03,
-    slotInfo02,
-    slotInfo01,
-    slotInfo03,
-    slotInfo00,
+    symbol01,
+    symbol03,
+    symbol00,
+    symbol02,
+    symbol03,
+    symbol00,
+    symbol02,
+    symbol01,
+    symbol00,
+    symbol02,
+    symbol01,
+    symbol03,
+    symbol02,
+    symbol01,
+    symbol03,
+    symbol00,
 ]);
 //Strip #05
 strips.push([
-    slotInfo01,
-    slotInfo03,
-    slotInfo00,
-    slotInfo02,
-    slotInfo03,
-    slotInfo00,
-    slotInfo02,
-    slotInfo01,
-    slotInfo00,
-    slotInfo02,
-    slotInfo01,
-    slotInfo03,
-    slotInfo02,
-    slotInfo01,
-    slotInfo03,
-    slotInfo00,
+    symbol01,
+    symbol03,
+    symbol00,
+    symbol02,
+    symbol03,
+    symbol00,
+    symbol02,
+    symbol01,
+    symbol00,
+    symbol02,
+    symbol01,
+    symbol03,
+    symbol02,
+    symbol01,
+    symbol03,
+    symbol00,
 ]);
+symbols.push(symbol00);
+symbols.push(symbol01);
+symbols.push(symbol02);
+symbols.push(symbol03);
+symbols.push(wildcardSymbol);
+symbols.push(wildcardBigWinSymbol);
 //# sourceMappingURL=SlotStrips.js.map

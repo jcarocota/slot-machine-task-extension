@@ -20,13 +20,15 @@ wss.on('connection', (ws: WebSocket) => {
   ws.on('message', (message: string) => {
     //log the received message and send it back to the client
 
-    console.log('received: %s', message, '... trying to convert to json');
+    //console.log('received: %s', message, '... trying to convert to json');
 
     let jsonMessage;
     try {
       jsonMessage = JSON.parse(message);
     } catch (error) {
-      console.error(`Unable to convert ${message} to JSON`);
+      const errorMessage = `Unable to convert ${message} to JSON`;
+      console.error(errorMessage);
+      ws.send(errorMessage);
     }
 
     if (
@@ -37,16 +39,35 @@ wss.on('connection', (ws: WebSocket) => {
     ) {
       let action = String(jsonMessage['action']).toLowerCase();
 
-      if (action == 'spin') {
-        const stake: number = jsonMessage['stake'];
-        const result = slotMachine.spin(stake);
-        ws.send(JSON.stringify(result));
-      } else {
-        console.error(`Action '${action}' not recognized`);
+      let result;
+      switch (action) {
+        case 'spin':
+          const stake: number = jsonMessage['stake'];
+          result = slotMachine.spin(stake);
+          ws.send(JSON.stringify(result));
+          break;
+        case 'strips':
+          result = slotMachine.strips;
+          ws.send(JSON.stringify(result));
+          break;
+        case 'symbols':
+          result = slotMachine.symbolsDescription();
+          ws.send(JSON.stringify(result));
+          break;
+        case 'balance':
+          result = slotMachine.moneyBalance;
+          ws.send(JSON.stringify(result));
+          break;
+        default:
+          const error = `Action '${action}' not recognized`;
+          console.error(error);
+          ws.send(error);
+          break;
       }
     } else {
-      console.error('Unable to process request');
-      ws.send(`Unable to process request for the data: ${message}`);
+      const error = `Unable to process request for the data: ${message}`;
+      console.error(error);
+      ws.send(error);
     }
 
     //console.log('received: %s', jsonMessage);

@@ -1,4 +1,4 @@
-export class Slot {
+export class Symbol {
   id: number;
   description: string;
 

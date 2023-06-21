@@ -26,18 +26,36 @@ wss.on('connection', (ws) => {
             jsonMessage['user'] &&
             jsonMessage['stake']) {
             let action = String(jsonMessage['action']).toLowerCase();
-            if (action == 'spin') {
-                const stake = jsonMessage['stake'];
-                const result = slotMachine.spin(stake);
-                ws.send(JSON.stringify(result));
-            }
-            else {
-                console.error(`Action '${action}' not recognized`);
+            let result;
+            switch (action) {
+                case 'spin':
+                    const stake = jsonMessage['stake'];
+                    result = slotMachine.spin(stake);
+                    ws.send(JSON.stringify(result));
+                    break;
+                case 'strips':
+                    result = slotMachine.strips;
+                    ws.send(JSON.stringify(result));
+                    break;
+                case 'symbols':
+                    result = slotMachine.symbolsDescription();
+                    ws.send(JSON.stringify(result));
+                    break;
+                case 'balance':
+                    result = slotMachine.moneyBalance;
+                    ws.send(JSON.stringify(result));
+                    break;
+                default:
+                    const error = `Action '${action}' not recognized`;
+                    console.error(error);
+                    ws.send(error);
+                    break;
             }
         }
         else {
-            console.error('Unable to process request');
-            ws.send(`Unable to process request for the data: ${message}`);
+            const error = `Unable to process request for the data: ${message}`;
+            console.error(error);
+            ws.send(error);
         }
         //console.log('received: %s', jsonMessage);
         //ws.send(`Hello, you sent -> ${jsonMessage}`);
